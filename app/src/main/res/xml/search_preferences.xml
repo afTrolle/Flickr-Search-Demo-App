@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory android:title="Search options">
+
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/sortBy"
+            android:entryValues="@array/sortBy_values"
+            android:summary="%s"
+            app:key="sortby"
+            app:title="Sort by" />
+
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/Licence"
+            android:entryValues="@array/Licence_values"
+            android:summary="%s"
+            app:key="licence"
+            app:title="Licence" />
+
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/presentation"
+            android:entryValues="@array/presentation_values"
+            android:summary="%s"
+            app:key="presentation"
+            app:title="Results view" />
+
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="App options">
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="nightMode"
+            android:title="Night Mode" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
