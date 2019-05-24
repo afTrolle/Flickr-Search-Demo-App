@@ -38,23 +38,23 @@ dependencies {
     def room_version = "2.1.0-beta01"
     def dagger_version = "2.22.1"
 
-
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.core:core-ktx:1.0.2'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    // Tests
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
-
-    //Ktx
+    // Ktx
     implementation "androidx.fragment:fragment-ktx:1.1.0-alpha09"
     implementation "androidx.activity:activity-ktx:1.0.0-alpha08"
 
-    //Lifecycle components
+    // Lifecycle components
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
 
@@ -63,49 +63,33 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
     implementation "androidx.navigation:navigation-runtime-ktx:$nav_version"
 
-    //Room for persistence
-
+    // Room for persistence (currently not used)
     implementation "androidx.room:room-runtime:$room_version"
-    kapt "androidx.room:room-compiler:$room_version" // For Kotlin use kapt instead of annotationProcessor
-    // optional - Kotlin Extensions and Coroutines support for Room
+    kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
-    // Test helpers
     testImplementation "androidx.room:room-testing:$room_version"
-    // optional - RxJava support for Room
     implementation "androidx.room:room-rxjava2:$room_version"
 
-
-    // Dependency injection, Dagger 2
-    //https://github.com/google/dagger
-
+    // Dependency injection, Dagger 2  https://github.com/google/dagger
     implementation "com.google.dagger:dagger:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
-
-    implementation "com.google.dagger:dagger-android-support:$dagger_version" // if you use the support libraries
+    implementation "com.google.dagger:dagger-android-support:$dagger_version"
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
 
-
-    //Flickr4Java
-    //https://github.com/boncey/Flickr4Java
-
+    // Flickr4Java , https://github.com/boncey/Flickr4Java
     implementation "com.flickr4java:flickr4java:3.0.1"
 
     // Glide
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 
-
-    //prefernces
+    // Preference
     implementation "androidx.preference:preference-ktx:1.1.0-alpha05"
 
-
-    // reycler view
+    // Recycler view
     implementation "androidx.recyclerview:recyclerview:1.0.0"
 
-
-    // zoomable View
-    //https://github.com/chrisbanes/PhotoView
+    // PhotoView, https://github.com/chrisbanes/PhotoView
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
-
 
 }
