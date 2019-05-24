@@ -12,14 +12,10 @@ import java.lang.Exception
 class MyApplication : Application(), ComponentProvider {
 
     override val component: ApplicationComponent by lazy {
+        //inject Application context into dependency injection
         val applicationModule = ApplicationModule(this)
         DaggerApplicationComponent.builder().applicationModule(applicationModule).build()
     }
-
-    //val applicationModule = ApplicationModule(this)
-    // val applicationComponent = DaggerApplicationComponent.builder().applicationModule(applicationModule).build()
-
-
 }
 
 interface ComponentProvider {

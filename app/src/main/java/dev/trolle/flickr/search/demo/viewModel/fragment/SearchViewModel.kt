@@ -25,22 +25,25 @@ class SearchViewModel @Inject constructor(
     val searchLiveData get() = searchViewLiveData as LiveData<SearchViewData>
 
     val searchResultsLiveData: MediatorLiveData<List<MyPhoto>> = MediatorLiveData()
+
     val searchResultsErrorLiveData: MutableLiveData<MySearchPhotoResponse.Error> = MutableLiveData()
 
     init {
-        searchViewLiveData.value = SearchViewData("search")
+        //set Search text hint
+        searchViewLiveData.value = SearchViewData(context.getString(R.string.search_hint))
 
         //push mock data
         //searchResultsLiveData.postValue(listOf(MyPhoto.mock(), MyPhoto.mock(), MyPhoto.mock(), MyPhoto.mock()))
 
-        //refresh layout with same data
+        //refresh layout with same data (will trigger when layout is changed)
         searchResultsLiveData.addSource(settingsRepository.layoutLiveData) {
             searchResultsLiveData.postValue(searchResultsLiveData.value)
         }
 
     }
 
-    private val hintExtra = context.getString(R.string.search_for)
+
+    /* View model actions */
 
     fun performSearch(query: String) {
         val searchQuery = FlickrRepo.SearchQuery(

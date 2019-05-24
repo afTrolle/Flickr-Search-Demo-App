@@ -1,4 +1,4 @@
-package dev.trolle.flickr.search.demo.view.view
+package dev.trolle.flickr.search.demo.view.adapter
 
 import android.view.LayoutInflater
 import android.view.View

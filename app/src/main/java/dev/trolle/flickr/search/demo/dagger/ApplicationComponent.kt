@@ -1,18 +1,15 @@
 package dev.trolle.flickr.search.demo.dagger
 
-import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import dagger.BindsInstance
 import dagger.Component
 import dev.trolle.flickr.search.demo.view.activity.MainActivity
 import dev.trolle.flickr.search.demo.view.application.MyApplication
 import dev.trolle.flickr.search.demo.view.fragment.PhotoDetailsFragment
 import dev.trolle.flickr.search.demo.view.fragment.PreferenceFragment
-import dev.trolle.flickr.search.demo.view.fragment.example.ExampleViewModel
 import dev.trolle.flickr.search.demo.viewModel.fragment.SearchViewModel
 import javax.inject.Singleton
 
@@ -21,14 +18,11 @@ import javax.inject.Singleton
 interface ApplicationComponent {
 
     fun inject(myApplication: MyApplication)
-
     fun inject(myApplication: MainActivity)
     fun inject(preferenceFragment: PreferenceFragment)
     fun inject(photoDetailsFragment: PhotoDetailsFragment)
 
-    val exampleViewModel: ExampleViewModel
-
-    val SearchViewModel: SearchViewModel
+    val searchViewModel: SearchViewModel
 }
 
 
@@ -54,7 +48,8 @@ inline fun <reified T : ViewModel> Fragment.viewModel(crossinline provider: () -
 
 /*
 *  Activity scope view models provider
-**/
+*  Retains viewModel over activity lifetime, (Ie can have it retain state when switch between fragments)
+*/
 inline fun <reified T : ViewModel> Fragment.activityViewModel(crossinline provider: () -> T) =
     activityViewModels<T> {
         object : ViewModelProvider.Factory {

@@ -29,15 +29,13 @@ class PhotoDetailsFragment : Fragment() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
-    val searchViewModel by activityViewModel { injector.SearchViewModel }
+    val searchViewModel by activityViewModel { injector.searchViewModel }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_photo_details, container, false)
-    }
+    ): View? = inflater.inflate(R.layout.fragment_photo_details, container, false)
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -46,11 +44,14 @@ class PhotoDetailsFragment : Fragment() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         photo_toolbar.setupWithNavController(navController, appBarConfiguration)
 
+        // Fetch photo from viewModel, (due to bug in flickerJavaClient)
         val photo = searchViewModel.searchResultsLiveData.value?.firstOrNull {
             it.id == args.photoId
         }
 
+
         if (photo == null) {
+            //means view model doesn't have photo anymore
             Snackbar.make(view, getString(R.string.missing_message), Snackbar.LENGTH_LONG).show()
             navController.navigateUp()
         } else {
@@ -60,21 +61,22 @@ class PhotoDetailsFragment : Fragment() {
         }
 
 
-        //Bug using library Some images causes class not found expection
-     /*   searchViewModel.getPhoto(args.photoId).observe(this) {
-            when (it) {
-                is MySearchPhotoResponse.Success -> {
-                    val photo = it.photos.first()
-                    photo_title.text = photo.title
-                    photo_summary.text = photo.description
-                    Glide.with(view).load(photo.largeUrl).into(photo_image_view)
-                }
-                is MySearchPhotoResponse.Error -> {
-                    Snackbar.make(view, it.message, Snackbar.LENGTH_LONG).show()
-                    navController.navigateUp()
-                }
-            }
-        }*/
+        //Bug using library Some images cause of class not found exception
+        //Should switch to retrofit
+        /*   searchViewModel.getPhoto(args.photoId).observe(this) {
+               when (it) {
+                   is MySearchPhotoResponse.Success -> {
+                       val photo = it.photos.first()
+                       photo_title.text = photo.title
+                       photo_summary.text = photo.description
+                       Glide.with(view).load(photo.largeUrl).into(photo_image_view)
+                   }
+                   is MySearchPhotoResponse.Error -> {
+                       Snackbar.make(view, it.message, Snackbar.LENGTH_LONG).show()
+                       navController.navigateUp()
+                   }
+               }
+           }*/
 
         searchViewModel.getPhotoInfo(args.photoId).observe(this) {
             when (it) {

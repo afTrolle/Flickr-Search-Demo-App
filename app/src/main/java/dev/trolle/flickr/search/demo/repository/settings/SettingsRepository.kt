@@ -31,13 +31,13 @@ class SettingsRepository @Inject constructor(
 
     fun getLicence(): String? = preferences.getString("licence", "")
 
-    enum class PresentationMode {
-        List, Grid
-    }
-
     fun getPresentationMode(): PresentationMode = when (preferences.getString("presentation", "0")) {
         "1" -> PresentationMode.Grid
         else -> PresentationMode.List
+    }
+
+    enum class PresentationMode {
+        List, Grid
     }
 
     val darkModeLiveData: MutableLiveData<Boolean> = MutableLiveData()

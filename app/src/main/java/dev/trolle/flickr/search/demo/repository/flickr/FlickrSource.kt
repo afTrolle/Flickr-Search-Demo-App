@@ -3,37 +3,16 @@ package dev.trolle.flickr.search.demo.repository.flickr
 import android.os.SystemClock
 import com.flickr4java.flickr.Flickr
 import com.flickr4java.flickr.FlickrException
-import com.flickr4java.flickr.people.User
-import com.flickr4java.flickr.photos.Photo
 import com.flickr4java.flickr.photos.SearchParameters
-import com.flickr4java.flickr.photos.comments.Comment
-import com.flickr4java.flickr.stats.Stats
 import dagger.Reusable
 import java.lang.Exception
 import java.util.*
 import javax.inject.Inject
 
-sealed class MySearchPhotoResponse {
-    data class Success(val photos: List<MyPhoto>) : MySearchPhotoResponse()
-    data class Error(val message: String, val errorCode: String) : MySearchPhotoResponse()
-}
-
-
-sealed class MyInfoPhotoResponse {
-    data class Success(
-        val photos: MutableList<Comment>,
-        val photosMeta: MyStats
-    ) : MyInfoPhotoResponse()
-
-    data class Error(val message: String, val errorCode: String) : MyInfoPhotoResponse()
-}
-
-
 @Reusable
 class FlickrSource @Inject constructor(
     private val flickr: Flickr
 ) {
-
 
     fun searchPhotos(
         text: String,
@@ -78,45 +57,4 @@ class FlickrSource @Inject constructor(
     }
 
 }
-
-
-private fun Photo.toMyPhoto(): MyPhoto =
-    MyPhoto(
-        this.id,
-        this.owner?.toUser(),
-        this.datePosted?.time,
-        this.dateTaken?.time,
-        this.license,
-
-        this.title,
-        this.description,
-        this.stats?.toMyStats(),
-
-        this.largeUrl,
-        this.thumbnailUrl,
-
-        this.squareLargeUrl,
-        this.smallSquareUrl,
-
-        this.url,
-        this.mediumUrl
-    )
-
-private fun Stats.toMyStats(): MyStats =
-    MyStats(
-        this.comments,
-        this.favorites,
-        this.views
-    )
-
-
-private fun User.toUser(): MyUser =
-    MyUser(
-        this.id,
-        this.username,
-        this.realName ?: "",
-        this.photosCount,
-        this.description ?: "",
-        this.photosFirstDate?.time
-    )
 

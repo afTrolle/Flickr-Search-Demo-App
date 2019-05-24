@@ -10,16 +10,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import dev.trolle.flickr.search.demo.R
-import dev.trolle.flickr.search.demo.dagger.viewModel
 import dev.trolle.flickr.search.demo.extensions.observe
-import dev.trolle.flickr.search.demo.repository.flickr.MyPhoto
 import dev.trolle.flickr.search.demo.view.application.injector
-import dev.trolle.flickr.search.demo.view.view.SearchAdapter
+import dev.trolle.flickr.search.demo.view.adapter.SearchAdapter
 import kotlinx.android.synthetic.main.fragment_search.*
 import androidx.recyclerview.widget.GridLayoutManager
 import dev.trolle.flickr.search.demo.dagger.activityViewModel
 import dev.trolle.flickr.search.demo.repository.settings.SettingsRepository
-import dev.trolle.flickr.search.demo.view.view.SearchGridAdapter
+import dev.trolle.flickr.search.demo.view.adapter.SearchGridAdapter
 
 
 /**
@@ -29,7 +27,7 @@ import dev.trolle.flickr.search.demo.view.view.SearchGridAdapter
  */
 class SearchFragment : Fragment() {
 
-    val searchViewModel by activityViewModel { injector.SearchViewModel }
+    val searchViewModel by activityViewModel { injector.searchViewModel }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -1,4 +1,4 @@
-package dev.trolle.flickr.search.demo.view.view
+package dev.trolle.flickr.search.demo.view.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -11,14 +11,13 @@ import dev.trolle.flickr.search.demo.R
 import dev.trolle.flickr.search.demo.extensions.dpToPx
 import dev.trolle.flickr.search.demo.repository.flickr.MyPhoto
 
-class SearchGridAdapter(private val myDataset: List<MyPhoto>, private val onItemclick: (photoId: String) -> Unit) :
+class SearchGridAdapter(private val myDataSet: List<MyPhoto>, private val onItemClick: (photoId: String) -> Unit) :
     RecyclerView.Adapter<SearchGridAdapter.ViewHolder>() {
 
     class ViewHolder(
         val myView: View,
         val image: ImageView,
         val title: TextView,
-       // val subTitle: TextView,
         val commentText: TextView,
         val favText: TextView,
         var currentPosition: Int
@@ -32,7 +31,6 @@ class SearchGridAdapter(private val myDataset: List<MyPhoto>, private val onItem
             view.findViewById<View>(R.id.search_item_Image_view) as ImageView,
 
             view.findViewById<View>(R.id.search_item_image_title) as TextView,
-//            view.findViewById<View>(R.id.search_item_image_sub_title) as TextView,
 
             view.findViewById<View>(R.id.search_item_comment_text) as TextView,
             view.findViewById<View>(R.id.search_item_fav_text) as TextView,
@@ -41,17 +39,18 @@ class SearchGridAdapter(private val myDataset: List<MyPhoto>, private val onItem
 
         view.findViewById<View>(R.id.search_item_card_view).setOnClickListener {
             val position = holder.currentPosition
-            val data = myDataset[position]
-            onItemclick(data.id)
+            val data = myDataSet[position]
+            onItemClick(data.id)
         }
 
         return holder
     }
 
-    override fun getItemCount(): Int = myDataset.size
+    override fun getItemCount(): Int = myDataSet.size
 
-    override fun onBindViewHolder(holder: SearchGridAdapter.ViewHolder, position: Int) {
-
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val data = myDataSet[position]
+        //Update mutable state of view holder
         holder.currentPosition = position
 
         //fix that if position is first element don't let the search bar block item
@@ -63,16 +62,12 @@ class SearchGridAdapter(private val myDataset: List<MyPhoto>, private val onItem
         }.dpToPx
 
         params.bottomMargin = when (position) {
-            myDataset.lastIndex -> 120
-            myDataset.lastIndex - 1 -> 120
+            myDataSet.lastIndex -> 120
+            myDataSet.lastIndex - 1 -> 120
             else -> 0
         }.dpToPx
 
-        val data = myDataset[position]
-        val myView = holder.myView
-
         holder.title.text = data.title
-
         holder.commentText.text = data.stats?.comments.toString()
         holder.favText.text = data.stats?.favorites.toString()
 

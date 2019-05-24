@@ -11,7 +11,6 @@ import javax.inject.Inject
 
 class PreferenceFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
 
-
     @Inject
     lateinit var settingsRepository: SettingsRepository
 
@@ -28,12 +27,6 @@ class PreferenceFragment : PreferenceFragmentCompat(), SharedPreferences.OnShare
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         settingsRepository.onSharedPreferenceChangeListener(sharedPreferences, key)
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-    }
-
 
 }
 

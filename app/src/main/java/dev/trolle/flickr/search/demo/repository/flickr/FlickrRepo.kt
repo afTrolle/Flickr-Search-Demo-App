@@ -27,9 +27,13 @@ class FlickrRepo @Inject constructor(
         val licence: String? = null
     )
 
+    /**
+     * Perform search based on query
+     *
+     * @returns live data object will be set with result when it's done
+     **/
     fun searchPhoto(searchQuery: SearchQuery): LiveData<MySearchPhotoResponse> {
         val ret = MutableLiveData<MySearchPhotoResponse>()
-
         GlobalScope.launch(context = Dispatchers.IO) {
             val result = flickrSource.searchPhotos(
                 searchQuery.queryText,
@@ -38,25 +42,33 @@ class FlickrRepo @Inject constructor(
             )
             ret.postValue(result)
         }
-
         return ret
     }
 
+    /**
+     * Get photo data of its id
+     *
+     * @returns live data object with list can only be one item or error
+     *
+     **/
     fun getPhoto(photoId: String): MutableLiveData<MySearchPhotoResponse> {
         val ret = MutableLiveData<MySearchPhotoResponse>()
-
         GlobalScope.launch(context = Dispatchers.IO) {
             //blocking function
             val result = flickrSource.getPhoto(photoId)
             ret.postValue(result) //post important we aren't on ui thread
         }
-
         return ret
     }
 
+    /**
+     * Get info about photo of its id
+     *
+     * @returns live data object with list can only be one item or error
+     *
+     **/
     fun getPhotoInfo(photoId: String): LiveData<MyInfoPhotoResponse> {
         val ret = MutableLiveData<MyInfoPhotoResponse>()
-
         GlobalScope.launch(context = Dispatchers.IO) {
             //blocking function
             val result = flickrSource.getPhotoInfo(photoId)
