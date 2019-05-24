@@ -16,6 +16,12 @@ class SettingsRepository @Inject constructor(
             "nightMode" -> {
                 darkModeLiveData.postValue(sharedPreferences?.getBoolean("nightMode", false))
             }
+            "presentation" -> {
+                layoutLiveData.postValue(getPresentationMode())
+            }
+            "sortby" -> {
+                sortByLiveData.postValue(getSortedBy())
+            }
         }
     }
 
@@ -34,8 +40,11 @@ class SettingsRepository @Inject constructor(
         else -> PresentationMode.List
     }
 
-
     val darkModeLiveData: MutableLiveData<Boolean> = MutableLiveData()
+
+    val layoutLiveData = MutableLiveData<PresentationMode>()
+
+    val sortByLiveData = MutableLiveData<Int>()
 }
 
 

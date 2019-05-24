@@ -18,8 +18,8 @@
     <fragment
         android:id="@+id/photoDetailsFragment"
         android:name="dev.trolle.flickr.search.demo.view.fragment.PhotoDetailsFragment"
-        android:label="fragment_photo_details"
-        tools:layout="@layout/fragment_photo_details" >
+        android:label="Photo Details"
+        tools:layout="@layout/fragment_photo_details">
         <argument
             android:name="photo_id"
             app:argType="string" />

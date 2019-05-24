@@ -6,7 +6,6 @@ import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -18,6 +17,9 @@ import dev.trolle.flickr.search.demo.view.application.injector
 import dev.trolle.flickr.search.demo.view.view.SearchAdapter
 import kotlinx.android.synthetic.main.fragment_search.*
 import androidx.recyclerview.widget.GridLayoutManager
+import dev.trolle.flickr.search.demo.dagger.activityViewModel
+import dev.trolle.flickr.search.demo.repository.settings.SettingsRepository
+import dev.trolle.flickr.search.demo.view.view.SearchGridAdapter
 
 
 /**
@@ -27,7 +29,7 @@ import androidx.recyclerview.widget.GridLayoutManager
  */
 class SearchFragment : Fragment() {
 
-    val searchViewModel by viewModel { injector.SearchViewModel }
+    val searchViewModel by activityViewModel { injector.SearchViewModel }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,6 +64,13 @@ class SearchFragment : Fragment() {
             override fun onQueryTextChange(newText: String?): Boolean = false
         })
 
+        //Perform search when button is clicked
+        search_search_button.setOnClickListener {
+            search.query.toString().ifEmpty { null }?.let {
+                searchViewModel.performSearch(it)
+            }
+        }
+
         search.setOnSearchClickListener {
             Snackbar.make(it, "onClick", Snackbar.LENGTH_LONG).show()
         }
@@ -76,28 +85,33 @@ class SearchFragment : Fragment() {
 
         //Show error if fetch failed
         searchViewModel.searchResultsErrorLiveData.observe(this) {
-            Snackbar.make(view, it.message, Snackbar.LENGTH_LONG).show()
-        }
-
-        recycler_view.layoutManager = GridLayoutManager(context, 2)
-
-     //   val layout = LinearLayoutManager(context)
-    //    recycler_view.layoutManager = layout
-
-        recycler_view.adapter = SearchAdapter(
-            listOf(MyPhoto.mock(), MyPhoto.mock(), MyPhoto.mock(), MyPhoto.mock())
-        ) { photoId ->
-            val action = SearchFragmentDirections.actionSearchFragmentToPhotoDetailsFragment(photoId, null)
-            findNavController().navigate(action)
+            val activeView = getView() ?: return@observe
+            Snackbar.make(activeView, it.message, Snackbar.LENGTH_LONG).show()
         }
 
 
-        //  set new adapter if new data is available
+        //  Set new adapter if new data is available
         searchViewModel.searchResultsLiveData.observe(this) {
-            val adapter = SearchAdapter(it) { photoId ->
-                Snackbar.make(view, "photo $photoId", Snackbar.LENGTH_LONG).show()
+
+            //called when search item has been clicked
+            val onSearchItemClicked = { photoId: String ->
+                val action = SearchFragmentDirections.actionSearchFragmentToPhotoDetailsFragment(photoId, null)
+                findNavController().navigate(action)
             }
-            recycler_view.adapter = adapter
+
+            when (searchViewModel.settingsRepository.getPresentationMode()) {
+                //use list adapter and layout
+                SettingsRepository.PresentationMode.List -> {
+                    recycler_view.layoutManager = LinearLayoutManager(context)
+                    recycler_view.adapter = SearchAdapter(it, onSearchItemClicked)
+                }
+
+                //use grid adapter and layout
+                SettingsRepository.PresentationMode.Grid -> {
+                    recycler_view.layoutManager = GridLayoutManager(context, 2)
+                    recycler_view.adapter = SearchGridAdapter(it, onSearchItemClicked)
+                }
+            }
         }
 
     }

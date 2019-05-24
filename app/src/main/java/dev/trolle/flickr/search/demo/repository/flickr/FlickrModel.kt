@@ -6,19 +6,22 @@ import androidx.room.*
 
 data class MyPhoto(
     @PrimaryKey val id: String,
-    val toUser: MyUser,
-    val datePosted: Long,
-    val dateTaken: Long,
-    val license: String,
-    val title: String,
-    val description: String,
-    val stats: MyStats,
-    val thumbnailUrl: String,
-    val squareLargeUrl: String,
-    val smallSquareUrl: String,
-    val url4: String,
-    val url: String
+    val toUser: MyUser?,
+    val datePosted: Long?,
+    val dateTaken: Long?,
+    val license: String?,
+    val title: String?,
+    val description: String?,
+    val stats: MyStats?,
+    val largeUrl: String?,
+    val thumbnailUrl: String?,
+    val largeSquare: String?,
+    val smallSquare: String?,
+    val url: String?,
+    val mediumUrl: String?
 ) {
+
+
     companion object {
         val url = "https://alexander.af.trolle.dev/src/images/alex.jpg"
         fun mock() = MyPhoto(
@@ -30,6 +33,7 @@ data class MyPhoto(
             "CV Image",
             "Image of me",
             MyStats.mock(),
+            url,
             url,
             url,
             url,
@@ -50,10 +54,10 @@ data class MyStats(val comments: Int, val favorites: Int, val views: Int) {
 data class MyUser(
     @PrimaryKey val id: String,
     val username: String,
-    val realName: String,
+    val realName: String?,
     val photosCount: Int,
     val description: String,
-    val photosFirstDate: Long
+    val photosFirstDate: Long?
 ) {
     companion object {
         fun mock() = MyUser("1524", "eric", "Alexander af Trolle", 1, "nice guy", SystemClock.currentThreadTimeMillis())

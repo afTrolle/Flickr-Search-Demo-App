@@ -12,13 +12,6 @@
             app:key="sortby"
             app:title="Sort by" />
 
-        <ListPreference
-            android:defaultValue="0"
-            android:entries="@array/Licence"
-            android:entryValues="@array/Licence_values"
-            android:summary="%s"
-            app:key="licence"
-            app:title="Licence" />
 
         <ListPreference
             android:defaultValue="0"

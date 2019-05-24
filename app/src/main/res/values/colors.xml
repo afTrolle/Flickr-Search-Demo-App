@@ -10,4 +10,8 @@
     <color name="onSurface">@color/grey</color>
 
     <color name="colorSurface">#FFFFFF</color>
+    <color name="black30">#50000000</color>
+
+    <color name="black70">#70000000</color>
+    <color name="white">#FFFFFF</color>
 </resources>

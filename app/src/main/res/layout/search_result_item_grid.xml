@@ -18,24 +18,24 @@
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
 
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_max="400dp">
+        app:layout_constraintWidth_max="220dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            >
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/search_item_Image_view"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:background="@color/onSurface"
-                app:layout_constraintDimensionRatio="19:10"
+                app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -45,34 +45,17 @@
                 style="@style/TextAppearance.MaterialComponents.Subtitle1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
                 android:background="@color/black30"
+                android:ellipsize="end"
+                android:lines="1"
+                android:maxLines="1"
+                android:paddingStart="8dp"
+                android:paddingTop="2dp"
+                android:paddingEnd="8dp"
                 android:textColor="@color/white"
-                android:ellipsize="end"
-                android:lines="1"
-                android:maxLines="1"
-                app:layout_constraintBottom_toBottomOf="@+id/search_item_Image_view"
+                app:layout_constraintBottom_toBottomOf="@id/search_item_Image_view"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/search_item_Image_view"
-                tools:text="hello world" />
-
-            <TextView
-                android:visibility="gone"
-                android:id="@+id/search_item_image_sub_title"
-                style="@style/TextAppearance.MaterialComponents.Caption"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="4dp"
-                android:ellipsize="end"
-
-                android:lines="1"
-                android:maxLines="1"
-                android:paddingBottom="12dp"
-                app:layout_constraintEnd_toStartOf="@+id/search_item_comment_text"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/search_item_image_title"
                 tools:text="hello world" />
 
             <TextView
@@ -80,12 +63,12 @@
                 android:id="@+id/search_item_fav_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:drawableEnd="@drawable/ic_baseline_favorite_24px"
+                android:layout_marginStart="8dp"
+                android:drawableStart="@drawable/ic_baseline_favorite_24px"
                 android:drawablePadding="5dp"
                 android:paddingTop="7dp"
                 android:text="@string/zero"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/search_item_comment_text"
                 app:layout_constraintTop_toBottomOf="@+id/search_item_Image_view" />
 
             <TextView
@@ -93,14 +76,13 @@
                 android:id="@+id/search_item_comment_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:drawableEnd="@drawable/ic_baseline_comment_24px"
+                android:layout_marginStart="8dp"
+                android:drawableStart="@drawable/ic_baseline_comment_24px"
                 android:drawablePadding="5dp"
-                android:paddingTop="4dp"
-                android:paddingBottom="5dp"
+                android:paddingTop="7dp"
                 android:text="@string/zero"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/search_item_fav_text" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_item_Image_view" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

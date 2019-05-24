@@ -101,4 +101,11 @@ dependencies {
 
     // reycler view
     implementation "androidx.recyclerview:recyclerview:1.0.0"
+
+
+    // zoomable View
+    //https://github.com/chrisbanes/PhotoView
+    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+
+
 }

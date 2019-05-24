@@ -4,15 +4,19 @@ import android.content.Context
 import androidx.lifecycle.*
 import dev.trolle.flickr.search.demo.R
 import dev.trolle.flickr.search.demo.repository.flickr.FlickrRepo
+import dev.trolle.flickr.search.demo.repository.flickr.MyInfoPhotoResponse
 import dev.trolle.flickr.search.demo.repository.flickr.MyPhoto
 import dev.trolle.flickr.search.demo.repository.flickr.MySearchPhotoResponse
 import dev.trolle.flickr.search.demo.repository.settings.SettingsRepository
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class SearchViewModel @Inject constructor(
     private val context: Context,
     private val flickrRepo: FlickrRepo,
-    private val settingsRepository: SettingsRepository
+    val settingsRepository: SettingsRepository
 ) : ViewModel() {
 
     data class SearchViewData(val searchHint: String)
@@ -25,6 +29,15 @@ class SearchViewModel @Inject constructor(
 
     init {
         searchViewLiveData.value = SearchViewData("search")
+
+        //push mock data
+        //searchResultsLiveData.postValue(listOf(MyPhoto.mock(), MyPhoto.mock(), MyPhoto.mock(), MyPhoto.mock()))
+
+        //refresh layout with same data
+        searchResultsLiveData.addSource(settingsRepository.layoutLiveData) {
+            searchResultsLiveData.postValue(searchResultsLiveData.value)
+        }
+
     }
 
     private val hintExtra = context.getString(R.string.search_for)
@@ -51,6 +64,10 @@ class SearchViewModel @Inject constructor(
 
     fun getPhoto(photoId: String): LiveData<MySearchPhotoResponse> {
         return flickrRepo.getPhoto(photoId = photoId)
+    }
+
+    fun getPhotoInfo(photoId: String) : LiveData<MyInfoPhotoResponse>  {
+        return flickrRepo.getPhotoInfo(photoId)
     }
 
 

@@ -54,6 +54,16 @@ class FlickrRepo @Inject constructor(
         return ret
     }
 
-    //TODO att storage here
+    fun getPhotoInfo(photoId: String): LiveData<MyInfoPhotoResponse> {
+        val ret = MutableLiveData<MyInfoPhotoResponse>()
+
+        GlobalScope.launch(context = Dispatchers.IO) {
+            //blocking function
+            val result = flickrSource.getPhotoInfo(photoId)
+            ret.postValue(result) //post important we aren't on ui thread
+        }
+        return ret
+    }
+
 
 }

@@ -12,4 +12,5 @@
     <string name="search_for">Search for</string>
     <string name="zero">0</string>
     <string name="error">Search Failed</string>
+    <string name="missing_message">Image not in memory</string>
 </resources>
